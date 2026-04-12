@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "@/components/Header";
-import { getRecommendations } from "@/data/colleges";
+import { useAllColleges } from "@/hooks/useColleges";
 import { College } from "@/types/college";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,20 +8,46 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { Target, TrendingUp, Shield } from "lucide-react";
 
+function extractCutoff(cutoff: string | null): number | null {
+  if (!cutoff) return null;
+  const match = cutoff.match(/(\d+)/);
+  return match ? parseInt(match[1]) : null;
+}
+
+function getRecommendations(colleges: College[], jeeRank: number) {
+  const eligible = colleges.filter(c => c.type === "IIT" || c.type === "NIT" || c.type === "IIIT");
+
+  const dream = eligible.filter(c => {
+    const n = extractCutoff(c.cutoff);
+    return n !== null && jeeRank > n * 1.5;
+  });
+  const reach = eligible.filter(c => {
+    const n = extractCutoff(c.cutoff);
+    return n !== null && jeeRank > n * 0.8 && jeeRank <= n * 1.5;
+  });
+  const safe = eligible.filter(c => {
+    const n = extractCutoff(c.cutoff);
+    return n !== null && jeeRank <= n * 0.8;
+  });
+
+  return { dream, reach, safe };
+}
+
 const RankPredictor = () => {
+  const { data: allColleges = [] } = useAllColleges();
   const [rank, setRank] = useState("");
   const [results, setResults] = useState<{ dream: College[]; reach: College[]; safe: College[] } | null>(null);
 
   const handlePredict = () => {
     const r = parseInt(rank);
     if (isNaN(r) || r <= 0) return;
-    setResults(getRecommendations(r));
+    setResults(getRecommendations(allColleges, r));
   };
 
   const TierSection = ({ title, icon: Icon, colleges, color }: { title: string; icon: any; colleges: College[]; color: string }) => (
     <div className="mb-6">
       <div className="flex items-center gap-2 mb-3">
-        <Icon className={`h-5 w-5`} style={{ color }} />
+        <Icon className="h-5 w-5" style={{ color }} />
         <h3 className="text-lg font-semibold" style={{ color }}>{title}</h3>
         <Badge variant="secondary" className="text-xs">{colleges.length}</Badge>
       </div>
@@ -30,11 +56,7 @@ const RankPredictor = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-7">
           {colleges.map(c => (
-            <Link
-              key={c.id}
-              to={`/college/${c.id}`}
-              className="bg-card border border-border rounded-md p-3 hover:shadow-md transition-shadow"
-            >
+            <Link key={c.id} to={`/college/${c.id}`} className="bg-card border border-border rounded-md p-3 hover:shadow-md transition-shadow">
               <p className="text-sm font-semibold text-primary">{c.name}</p>
               <p className="text-xs text-muted-foreground">{c.city} · NIRF #{c.nirfRank} · {c.cutoff}</p>
             </Link>
@@ -49,9 +71,7 @@ const RankPredictor = () => {
       <Header />
       <div className="container mx-auto px-4 py-6 max-w-3xl">
         <h1 className="text-3xl font-bold text-primary mb-2">Rank-Based College Predictor</h1>
-        <p className="text-sm text-muted-foreground mb-6">
-          Enter your JEE rank to see dream, reach, and safe colleges
-        </p>
+        <p className="text-sm text-muted-foreground mb-6">Enter your JEE rank to see dream, reach, and safe colleges</p>
 
         <div className="bg-card rounded-lg border border-border p-6 mb-8">
           <label className="block text-sm font-medium text-foreground mb-2">Your JEE Rank</label>

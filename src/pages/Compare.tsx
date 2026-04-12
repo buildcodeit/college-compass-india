@@ -1,17 +1,17 @@
 import { useState } from "react";
 import Header from "@/components/Header";
-import { colleges } from "@/data/colleges";
+import { useAllColleges } from "@/hooks/useColleges";
 import { College } from "@/types/college";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
 const Compare = () => {
+  const { data: allColleges = [] } = useAllColleges();
   const [selected, setSelected] = useState<College[]>([]);
 
   const addCollege = (id: string) => {
     if (selected.length >= 4) return;
-    const c = colleges.find(c => c.id === id);
+    const c = allColleges.find(c => c.id === id);
     if (c && !selected.find(s => s.id === id)) setSelected([...selected, c]);
   };
 
@@ -44,7 +44,7 @@ const Compare = () => {
             defaultValue=""
           >
             <option value="" disabled>Add a college...</option>
-            {colleges
+            {allColleges
               .filter(c => !selected.find(s => s.id === c.id))
               .map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
