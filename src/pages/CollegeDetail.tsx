@@ -1,12 +1,21 @@
 import { useParams, Link } from "react-router-dom";
-import { colleges } from "@/data/colleges";
+import { useCollege } from "@/hooks/useColleges";
 import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, MapPin, Globe, Calendar, Star, BookOpen, DollarSign, TrendingUp, Award } from "lucide-react";
 
 const CollegeDetail = () => {
   const { id } = useParams();
-  const college = colleges.find(c => c.id === id);
+  const { data: college, isLoading } = useCollege(id);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-16 text-center text-muted-foreground">Loading...</div>
+      </div>
+    );
+  }
 
   if (!college) {
     return (

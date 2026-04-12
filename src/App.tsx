@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CollegeDetail from "./pages/CollegeDetail";
 import Compare from "./pages/Compare";
 import RankPredictor from "./pages/RankPredictor";
+import Bookmarks from "./pages/Bookmarks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
           <Route path="/college/:id" element={<CollegeDetail />} />
           <Route path="/compare" element={<Compare />} />
           <Route path="/predictor" element={<RankPredictor />} />
+          <Route path="/bookmarks" element={<Bookmarks />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

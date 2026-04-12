@@ -1,8 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Header from "@/components/Header";
 import CollegeCard from "@/components/CollegeCard";
 import FilterSidebar from "@/components/FilterSidebar";
-import { searchColleges } from "@/data/colleges";
+import { useColleges } from "@/hooks/useColleges";
+import { useBookmarks } from "@/hooks/useBookmarks";
 
 const Index = () => {
   const [query, setQuery] = useState("");
@@ -10,24 +11,9 @@ const Index = () => {
   const [type, setType] = useState("");
   const [course, setCourse] = useState("");
   const [sortBy, setSortBy] = useState("nirfRank");
-  const [bookmarks, setBookmarks] = useState<Set<string>>(() => {
-    const saved = localStorage.getItem("college-bookmarks");
-    return saved ? new Set(JSON.parse(saved)) : new Set();
-  });
 
-  const results = useMemo(() =>
-    searchColleges({ query, state, type, course, sortBy: sortBy as "nirfRank" | "name" }),
-    [query, state, type, course, sortBy]
-  );
-
-  const toggleBookmark = (id: string) => {
-    setBookmarks(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      localStorage.setItem("college-bookmarks", JSON.stringify([...next]));
-      return next;
-    });
-  };
+  const { data: results = [], isLoading } = useColleges({ query, state, type, course, sortBy });
+  const { bookmarks, toggleBookmark } = useBookmarks();
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,7 +22,7 @@ const Index = () => {
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-primary">Discover Indian Colleges</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Explore {results.length} colleges across India — IITs, NITs, IIITs, and more
+            {isLoading ? "Loading..." : `Explore ${results.length} colleges across India — IITs, NITs, IIITs, and more`}
           </p>
         </div>
 
@@ -50,7 +36,9 @@ const Index = () => {
           </div>
 
           <div className="flex-1">
-            {results.length === 0 ? (
+            {isLoading ? (
+              <div className="text-center py-16 text-muted-foreground">Loading colleges...</div>
+            ) : results.length === 0 ? (
               <div className="text-center py-16 text-muted-foreground">
                 No colleges found matching your filters.
               </div>
