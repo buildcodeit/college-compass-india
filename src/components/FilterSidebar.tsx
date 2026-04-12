@@ -1,4 +1,4 @@
-import { getUniqueStates, getUniqueTypes, getUniqueCourses } from "@/data/colleges";
+import { useFilterOptions } from "@/hooks/useColleges";
 
 interface FilterSidebarProps {
   state: string;
@@ -15,9 +15,10 @@ const FilterSidebar = ({
   state, type, course, sortBy,
   onStateChange, onTypeChange, onCourseChange, onSortChange,
 }: FilterSidebarProps) => {
-  const states = getUniqueStates();
-  const types = getUniqueTypes();
-  const courses = getUniqueCourses();
+  const { data: options } = useFilterOptions();
+  const states = options?.states ?? [];
+  const types = options?.types ?? [];
+  const courses = options?.courses ?? [];
 
   const selectClass = "w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring";
 
