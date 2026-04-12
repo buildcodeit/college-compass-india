@@ -26,6 +26,9 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
           <Link to="/predictor" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             Rank Predictor
           </Link>
+          <Link to="/bookmarks" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            Saved
+          </Link>
         </nav>
         {onSearchChange && (
           <div className="relative w-64">
