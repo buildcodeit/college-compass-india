@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import Index from "./pages/Index.tsx";
-import NotFound from "./pages/NotFound.tsx";
+import Index from "./pages/Index";
+import CollegeDetail from "./pages/CollegeDetail";
+import Compare from "./pages/Compare";
+import RankPredictor from "./pages/RankPredictor";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +19,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/college/:id" element={<CollegeDetail />} />
+          <Route path="/compare" element={<Compare />} />
+          <Route path="/predictor" element={<RankPredictor />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
