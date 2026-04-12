@@ -14,7 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      bookmarks: {
+        Row: {
+          college_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      colleges: {
+        Row: {
+          city: string
+          courses: string[]
+          created_at: string
+          cutoff: string | null
+          established: number | null
+          fees: string | null
+          id: string
+          name: string
+          nirf_rank: number | null
+          placements_avg: string | null
+          placements_highest: string | null
+          rating: number | null
+          state: string
+          type: Database["public"]["Enums"]["college_type"]
+          website: string | null
+        }
+        Insert: {
+          city: string
+          courses?: string[]
+          created_at?: string
+          cutoff?: string | null
+          established?: number | null
+          fees?: string | null
+          id: string
+          name: string
+          nirf_rank?: number | null
+          placements_avg?: string | null
+          placements_highest?: string | null
+          rating?: number | null
+          state: string
+          type: Database["public"]["Enums"]["college_type"]
+          website?: string | null
+        }
+        Update: {
+          city?: string
+          courses?: string[]
+          created_at?: string
+          cutoff?: string | null
+          established?: number | null
+          fees?: string | null
+          id?: string
+          name?: string
+          nirf_rank?: number | null
+          placements_avg?: string | null
+          placements_highest?: string | null
+          rating?: number | null
+          state?: string
+          type?: Database["public"]["Enums"]["college_type"]
+          website?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +105,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      college_type: "IIT" | "NIT" | "IIIT" | "Private" | "Govt"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +232,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      college_type: ["IIT", "NIT", "IIIT", "Private", "Govt"],
+    },
   },
 } as const
