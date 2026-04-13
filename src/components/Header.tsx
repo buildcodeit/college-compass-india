@@ -39,6 +39,13 @@ const Header = ({ searchQuery, onSearchChange }: HeaderProps) => {
             />
           </div>
         )}
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+          aria-label="Toggle theme"
+        >
+          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </button>
       </div>
       <div className="container mx-auto px-4">
         <nav className="flex items-center gap-1 overflow-x-auto pb-0 -mb-px scrollbar-none">
