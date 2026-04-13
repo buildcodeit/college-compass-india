@@ -15,6 +15,8 @@ export interface College {
   rating: number | null;
   established: number | null;
   website: string | null;
+  applicationDeadline: string | null;
+  testDeadline: string | null;
 }
 
 export type RecommendationTier = "dream" | "reach" | "safe";

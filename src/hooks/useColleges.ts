@@ -21,6 +21,8 @@ function mapDbCollege(row: DbCollege): College {
     rating: row.rating ? Number(row.rating) : null,
     established: row.established,
     website: row.website,
+    applicationDeadline: (row as any).application_deadline ?? null,
+    testDeadline: (row as any).test_deadline ?? null,
   };
 }
 
