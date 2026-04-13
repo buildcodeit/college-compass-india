@@ -4,7 +4,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/useTheme";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import CollegeDetail from "./pages/CollegeDetail";
 import Compare from "./pages/Compare";
