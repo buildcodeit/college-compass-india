@@ -45,6 +45,7 @@ export type Database = {
       }
       colleges: {
         Row: {
+          application_deadline: string | null
           city: string
           courses: string[]
           created_at: string
@@ -58,10 +59,12 @@ export type Database = {
           placements_highest: string | null
           rating: number | null
           state: string
+          test_deadline: string | null
           type: Database["public"]["Enums"]["college_type"]
           website: string | null
         }
         Insert: {
+          application_deadline?: string | null
           city: string
           courses?: string[]
           created_at?: string
@@ -75,10 +78,12 @@ export type Database = {
           placements_highest?: string | null
           rating?: number | null
           state: string
+          test_deadline?: string | null
           type: Database["public"]["Enums"]["college_type"]
           website?: string | null
         }
         Update: {
+          application_deadline?: string | null
           city?: string
           courses?: string[]
           created_at?: string
@@ -92,6 +97,7 @@ export type Database = {
           placements_highest?: string | null
           rating?: number | null
           state?: string
+          test_deadline?: string | null
           type?: Database["public"]["Enums"]["college_type"]
           website?: string | null
         }

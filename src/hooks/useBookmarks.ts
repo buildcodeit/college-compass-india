@@ -137,6 +137,8 @@ export function useBookmarkedColleges() {
           rating: c.rating ? Number(c.rating) : null,
           established: c.established,
           website: c.website,
+          applicationDeadline: c.application_deadline ?? null,
+          testDeadline: c.test_deadline ?? null,
         };
       });
     },

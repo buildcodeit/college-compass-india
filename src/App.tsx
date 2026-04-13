@@ -8,6 +8,7 @@ import CollegeDetail from "./pages/CollegeDetail";
 import Compare from "./pages/Compare";
 import RankPredictor from "./pages/RankPredictor";
 import Bookmarks from "./pages/Bookmarks";
+import Deadlines from "./pages/Deadlines";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/compare" element={<Compare />} />
           <Route path="/predictor" element={<RankPredictor />} />
           <Route path="/bookmarks" element={<Bookmarks />} />
+          <Route path="/deadlines/:type" element={<Deadlines />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
