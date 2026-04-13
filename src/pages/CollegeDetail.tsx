@@ -2,7 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useCollege } from "@/hooks/useColleges";
 import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, MapPin, Globe, Calendar, Star, BookOpen, DollarSign, TrendingUp, Award } from "lucide-react";
+import { ArrowLeft, MapPin, Globe, Calendar, Star, BookOpen, DollarSign, TrendingUp, Award, FileCheck, CalendarClock } from "lucide-react";
 
 const CollegeDetail = () => {
   const { id } = useParams();
@@ -38,6 +38,8 @@ const CollegeDetail = () => {
     { icon: TrendingUp, label: "Avg Placement", value: college.placementsAvg },
     { icon: TrendingUp, label: "Highest Placement", value: college.placementsHighest },
     { icon: BookOpen, label: "Cutoff", value: college.cutoff },
+    { icon: FileCheck, label: "Application Deadline", value: college.applicationDeadline },
+    { icon: CalendarClock, label: "Test Deadline", value: college.testDeadline },
   ];
 
   return (
